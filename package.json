@@ -1,0 +1,10 @@
+{
+  "name": "herojson",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "2.2.0",
+    "redis-url": "0.0.1"
+   , "hiredis": "0.1.13"
+    , "redis": "0.7.1"
+  }
+}
