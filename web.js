@@ -1,8 +1,10 @@
 // TODO: implement HDEL
+
 var express = require('express');
 var app = express.createServer(express.logger());
-var whost = "http://herojson.heroku.com";
-var xhost = "http://herojson.heroku.com";
+// these string are used while generating the management page; there's one for each in case you want to run commands on different servers
+var whost = "http://herojson.heroku.com"; // change to your webapp's address. If running locally this would be 127.0.0.1:3000
+var xhost = "http://herojson.heroku.com"; // same as above
 if (process.env.REDISTOGO_URL) {
     var rtg = require("url")
         .parse(process.env.REDISTOGO_URL);
@@ -79,29 +81,29 @@ app.get('/CHECKIN/:what', function(req, res) {
     });
 });
 app.all('/redishash/:hashname', function(req, res) {
-    risp = "";
+    response = "";
     console.log("redishash/");
     redis.hgetall(req.params.hashname, function(err, q) {
         console.log(err);
         console.log(sys.inspect(q));
-        for (ea in q) {
-            risp = risp + ea + " : " + q[ea] + "  <a href='" + whost + "/HDEL/" + req.params.hashname + "/" + ea + "' target='_blank'>delete</a> <br>";
+        for (each in q) {
+            response = response + each + " : " + q[each] + "  <a href='" + whost + "/HDEL/" + req.params.hashname + "/" + each + "' target='_blank'>delete</a> <br>";
         }
-        res.send(risp);
+        res.send(response);
     });
 });
 app.all('/check/:whatever', function(req, res) {
     var date = new Date();
     d = date.getTime();
-    risp = "";
+    response = "";
     console.log("whatever/");
     redis.hgetall("checkins_e", function(err, q) {
         console.log(err);
         //console.log(sys.inspect(q));
-        for (ea in q) {
-            risp = risp + "[" + (d - q[ea]) / 1000 + "]  " + ea + " : " + q[ea] + "  <a href='" + whost + "/HDEL/" + req.params.hashname + "/" + ea + "' target='_blank'>delete</a> <br>";
+        for (each in q) {
+            response = response + "[" + (d - q[each]) / 1000 + "]  " + each + " : " + q[each] + "  <a href='" + whost + "/HDEL/" + req.params.hashname + "/" + each + "' target='_blank'>delete</a> <br>";
         }
-        res.send(risp);
+        res.send(response);
     });
 });
 app.post('/redispost/:key/:field', function(req, res) {
@@ -113,16 +115,16 @@ app.post('/redispost/:key/:field', function(req, res) {
     });
 });
 app.all('/redis', function(req, res) {
-    risp = "";
+    response = "";
     console.log("redis/");
     redis.keys("*", function(err, keys) {
         keys.forEach(function(key, pos) {
             redis.type(key, function(err, keytype) {
                 console.log(key + " is " + keytype);
-                if (keytype == "string") risp = risp + key + " [" + keytype + "] <a href='" + whost + "/DEL/" + key + "' target='_blank'>delete</a>  <a href='" + whost + "/GET/" + key + "' target='_blank'>show</a>    <br>";
-                if (keytype == "hash") risp = risp + key + " [" + keytype + "] <a href='" + whost + "/DEL/" + key + "' target='_blank'>delete</a>  <a href='" + xhost + "/redishash/" + key + "' target='_blank'>show</a> <a href='" + xhost + "/hashedit/" + key + "' target='_blank'>edit</a> <br>";
+                if (keytype == "string") response = response + key + " [" + keytype + "] <a href='" + whost + "/DEL/" + key + "' target='_blank'>delete</a>  <a href='" + whost + "/GET/" + key + "' target='_blank'>show</a>    <br>";
+                if (keytype == "hash") response = response + key + " [" + keytype + "] <a href='" + whost + "/DEL/" + key + "' target='_blank'>delete</a>  <a href='" + xhost + "/redishash/" + key + "' target='_blank'>show</a> <a href='" + xhost + "/hashedit/" + key + "' target='_blank'>edit</a> <br>";
                 if (pos === (keys.length - 1)) {
-                    res.send(risp);
+                    res.send(response);
                 }
             });
         });
