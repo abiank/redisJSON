@@ -3,7 +3,7 @@ var app = express.createServer(express.logger());
 var OAuth = require('oauth').OAuth;
 // these two string are used while generating the management page; there's one for each in case you want to run commands on different servers
 var whost = "http://herojson.herokuapp.com"; // change to your webapp's address. If running locally this would be 127.0.0.1:3000
-var xhost = "http://herojson.herokuapp.com"; // same as above
+var xhost = "http://herojson.herokuapp.com"; // same as above.
 twitterAccessTokenSecret = "change with your own twitter Oauth credentials"; // change with your own twitter Oauth credentials
 twitterAccessToken = "change with your own twitter Oauth credentials";
 twitterConsumerKey = "change with your own twitter Oauth credentials";
