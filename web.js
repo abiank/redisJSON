@@ -79,43 +79,43 @@ app.get('/', function(request, response) {
 app.get('/HGETALL/:what', function(req, res) {
     if (debug) console.log("hgetall/ " + req.params.what);
     redis.hgetall(req.params.what, function(err, quotes) {
-        console.log("hgetall/ " + req.params.what); // This is needed for cross origin xmlhttpreqs to work in browsers        
+        res.header("Access-Control-Allow-Origin", "*"); // This is needed for cross origin xmlhttpreqs to work in browsers        
         res.send(JSON.stringify(quotes))
     });
 });
 app.get('/HGET/:what/:key', function(req, res) {
     if (debug) console.log("hget/" + what + " " + key);
     redis.hget(req.params.what, req.params.key, function(err, quotes) {
-        console.log("hgetall/ " + req.params.what); // This is needed for cross origin xmlhttpreqs to work in browsers        
+        res.header("Access-Control-Allow-Origin", "*"); // This is needed for cross origin xmlhttpreqs to work in browsers         
         res.send(JSON.stringify(quotes))
     });
 });
 app.get('/SET/:what/:come', function(req, res) {
     if (debug) console.log("set " + what + " " + come);
     redis.set(req.params.what, req.params.come, function(err, quotes) {
-        console.log("hgetall/ " + req.params.what); // This is needed for cross origin xmlhttpreqs to work in browsers        
+        res.header("Access-Control-Allow-Origin", "*"); // This is needed for cross origin xmlhttpreqs to work in browsers         
         res.send("OK");
     });
 });
 app.get('/GET/:what', function(req, res) {
     if (debug) console.log("get " + what);
     redis.get(req.params.what, function(err, quotes) {
-        console.log("hgetall/ " + req.params.what); // This is needed for cross origin xmlhttpreqs to work in browsers        
+        res.header("Access-Control-Allow-Origin", "*"); // This is needed for cross origin xmlhttpreqs to work in browsers         
         res.send(JSON.stringify(quotes))
     });
 });
 app.get('/HMGET/:what/:key1/:key2', function(req, res) {
     if (debug) console.log("HMGET " + what + " " + key1 + " " + key2);
     redis.hmget(req.params.what, req.params.key1, req.params.key2, function(err, quotes) {
-        console.log("hgetall/ " + req.params.what); // This is needed for cross origin xmlhttpreqs to work in browsers        
+        res.header("Access-Control-Allow-Origin", "*"); // This is needed for cross origin xmlhttpreqs to work in browsers         
         res.send(JSON.stringify(quotes));
         if (debug) console.log(JSON.stringify(quotes));
     });
 });
-app.get('/HSET/:what/:key/:valore', function(req, res) {
-    if (debug) console.log("HSET " + what + " " + key + " " + valore);
-    redis.hset(req.params.what, req.params.key, req.params.valore, function(err, quotes) {
-        console.log("hgetall/ " + req.params.what); // This is needed for cross origin xmlhttpreqs to work in browsers        
+app.get('/HSET/:what/:key/:value', function(req, res) {
+    if (debug) console.log("HSET " + what + " " + key + " " + value);
+    redis.hset(req.params.what, req.params.key, req.params.value, function(err, quotes) {
+        res.header("Access-Control-Allow-Origin", "*"); // This is needed for cross origin xmlhttpreqs to work in browsers         
         res.send("OK");
         if (debug) console.log(JSON.stringify(quotes));
     });
@@ -125,7 +125,8 @@ app.get('/CHECKIN/:what', function(req, res) {
     redis.hset("checkins", req.params.what, date, function(err, quotes) {
         redis.hset(checkinsHashName, req.params.what, date.getTime(), function(err, quotes) {
             redis.hset(checkinsHashName, "LASTCHECKIN", date.getTime(), function(err, quotes) {
-                console.log("hgetall/ " + req.params.what); // This is needed for cross origin xmlhttpreqs to work in browsers                res.send("OK");
+                res.header("Access-Control-Allow-Origin", "*"); // This is needed for cross origin xmlhttpreqs to work in browsers                 
+				res.send("OK");
             });
         });
     });
