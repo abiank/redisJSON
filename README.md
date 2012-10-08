@@ -23,6 +23,8 @@ You will be notified via twitter every 60 seconds if no one has called the url
 
 http://approot/CHECKIN/myhost in the last 5 minutes (300 seconds)
 
+..if you have provided your oAuth credentials.
+
 
 
 
