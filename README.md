@@ -9,7 +9,7 @@ This is then used on a page, served at http://root/CHECK/it , that displays elap
 
 Warning
 =======
-This is not meant to be run on a public server in apublic application as it lacks any kind of access control. If you need security, try http://webd.is .
+This is not meant to be run on a public server in apublic application as it lacks any kind of access control. If you need security, try webdis ( https://github.com/nicolasff/webdis . )
 This is only intended for running inside your intranet.
 
 How to run
