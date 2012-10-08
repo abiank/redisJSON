@@ -1,3 +1,7 @@
+// heroku redisJSON valuestore and connection checker
+// https://github.com/abiank/redisJSON
+// check package.json for depencies
+
 var express = require('express');
 var app = express.createServer(express.logger());
 var OAuth = require('oauth').OAuth;
